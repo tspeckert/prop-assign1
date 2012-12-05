@@ -1,9 +1,10 @@
 
 public class Test {
 
-	public static void invoke (DelegationObject obj, String method, Object... args) {
+	//simplified invoke method (0 or 1 parameters only)
+	public static void invoke (DelegationObject obj, String method, Object arg) {
 		if (obj.functions.containsKey(method)) {
-			obj.functions.get(method).execute(obj, args);
+			obj.functions.get(method).execute(obj, arg);
 		}
 		
 		return;
@@ -20,7 +21,7 @@ public class Test {
 		delObjThree.proto = delObjTwo;
 		
 		delObjTwo.functions.put("test", new DelegationFunction() {
-			public void execute(DelegationObject self, Object... args) {
+			public void execute(DelegationObject self, Object arg) {
 				System.out.println("test method invoked");
 			}
 		});
