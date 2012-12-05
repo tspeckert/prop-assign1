@@ -1,4 +1,6 @@
+import java.util.*;
 
-public class DelegationObject {
+class DelegationObject {
 	public DelegationObject proto;
+	public HashMap <String, DelegationFunction> functions;
 }
