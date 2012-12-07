@@ -7,7 +7,7 @@ public class DelegationObject {
 	
 	public DelegationObject() {
 		proto = null;
-		functions = new HashMap();
+		functions = new HashMap <String,DelegationFunction> ();
 	}
 	
 	public void invokeMethod(String method, Object arg) {
