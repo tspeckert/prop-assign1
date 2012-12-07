@@ -10,13 +10,10 @@ public class InheritanceObject {
 	private String msg;
 	
 	public HashMap <String, InheritanceFunction> functions;
-
+	private InheritanceFunction func;
 	
 	public InheritanceObject(InheritanceClass c) {
 		myClass = c;
 		functions = new HashMap<String, InheritanceFunction> (c.functions);
 	}
-	
-	
-	
 }
