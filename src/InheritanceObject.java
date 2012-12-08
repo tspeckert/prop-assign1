@@ -15,5 +15,21 @@ public class InheritanceObject {
 	public InheritanceObject(InheritanceClass c) {
 		myClass = c;
 		functions = new HashMap<String, InheritanceFunction> (c.functions);
+		func = null;
 	}
+	
+	public void invokeMethod(String method, Object arg) {
+		
+		func = myClass.getMethod(method);
+		
+		if (func == null) {
+			System.out.println("Method " + method + " does not exist.");
+			return;
+		}
+		
+		func.execute(this, arg);
+		
+		return;
+	}
+	
 }
