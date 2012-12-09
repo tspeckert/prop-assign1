@@ -7,7 +7,7 @@ public class InheritanceObject {
 	//set as private as we don't want it to be changed after it is set during its instantiation
 	private InheritanceClass myClass;
 	
-	private String msg;
+	public String msg;
 	
 	public HashMap <String, InheritanceFunction> functions;
 	private InheritanceFunction func;
@@ -28,7 +28,6 @@ public class InheritanceObject {
 		}
 		
 		func.execute(this, arg);
-		
 		return;
 	}
 	

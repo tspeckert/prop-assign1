@@ -4,9 +4,8 @@ public class InheritanceClass {
 
 	public HashMap <String, InheritanceFunction> functions;
 	private InheritanceClass parent;
-	private String msg;
 	
-	//create a new class that doesn't have a parent 
+	//create a new class that doesn't have a parent 	
 	public InheritanceClass() {
 		functions = new HashMap <String,InheritanceFunction> ();
 		parent = null;

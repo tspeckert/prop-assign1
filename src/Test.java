@@ -18,13 +18,25 @@ public class Test {
 		System.out.println ("*** Testing delegation ***");
 		System.out.println ("**************************\n");
 		
+		/* Create four objects in the following hierarchy:
+		 *      
+		 *       delObjOne
+		 *        /    \
+		 * delObjFour   delObjTwo
+		 *                     \
+		 *                    delObjThree 
+		 *                    
+		 */
+		
 		DelegationObject delObjOne = new DelegationObject();
 		DelegationObject delObjTwo = new DelegationObject();
 		DelegationObject delObjThree = new DelegationObject();
+		DelegationObject delObjFour = new DelegationObject();
 
 		delObjOne.proto = null;
 		delObjTwo.proto = delObjOne;
 		delObjThree.proto = delObjTwo;
+		delObjFour.proto = delObjOne;
 		
 		delObjOne.functions.put("test", new DelegationFunction() {
 			public void execute(DelegationObject self, Object arg) {
@@ -47,10 +59,28 @@ public class Test {
 		invoke(delObjOne, "test", (Object) null);
 		invoke(delObjTwo, "test", (Object) null);
 		invoke(delObjThree, "test", (Object) null);
-		invoke(delObjTwo, "setMsg", "This is a set message. Hello.");
+	
+		//set a message on object 2
+		invoke(delObjTwo, "setMsg", "This is a set message on object 2. Hello.");
+		
+		//these should fail as object 1 does not have a printMsg set and it does
+		//not have a prototype and object 4's prototype is object 1
 		invoke(delObjOne, "printMsg", null);
+		invoke(delObjFour, "printMsg", null);
+		
+		//this should succeed in printing the message
 		invoke(delObjTwo, "printMsg", null);
+		
+		//this should succeed in printing the message as object three will
+		//delegate it to object 2
 		invoke(delObjThree, "printMsg", null);
+		
+		//change object four's prototype
+		delObjFour.proto = delObjThree;
+		
+		//this should now succeed in printing the message as object four will
+		//now delegate it to object 3, who will delegate it to object 2
+		invoke(delObjFour, "printMsg", null);
 		
 		System.out.println ("\n***************************");
 		System.out.println ("*** Testing inheritance ***");
@@ -94,6 +124,28 @@ public class Test {
 		});
 		
 		invoke(objFour, "test", (Object) null);
+		
+		classOne.functions.put("setMsg", new InheritanceFunction() {
+			public void execute(InheritanceObject self, Object arg) {
+				self.msg = (String) arg;
+			}
+		});
+		
+		classOne.functions.put("printMsg", new InheritanceFunction() {
+			public void execute(InheritanceObject self, Object arg) {
+				System.out.println(self.msg);
+			}
+		});
+		
+		invoke(objOne, "setMsg", "Hello I am object 1");
+		invoke(objTwo, "setMsg", "Hello I am object 2");
+		invoke(objThree, "setMsg", "Hello I am object 3");
+		invoke(objFour, "setMsg", "Hello I am object 4");
+		
+		invoke(objOne, "printMsg", null);
+		invoke(objTwo, "printMsg", null);
+		invoke(objThree, "printMsg", null);
+		invoke(objFour, "printMsg", null);
 	}
 
 }
