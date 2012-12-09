@@ -17,13 +17,14 @@ public class InheritanceClass {
 		this.parent = parent;
 	}
 	
+	//fetch the appropriate method from the class hierarchy
 	InheritanceFunction getMethod (String method) {
-		if (functions.containsKey(method)) {
-			return functions.get(method);
-		} else if (parent != null) {
-			return parent.getMethod(method);
+		if (functions.containsKey(method)) {	//check to see if the method exists in this class
+			return functions.get(method);		//method exists, so pass it to the object
+		} else if (parent != null) {			
+			return parent.getMethod(method);	//go to the objects parent (if one exists) to fetch the method
 		} else {
-			return null;
+			return null;						//method does not exist in this hierarchy
 		}
 	}
 

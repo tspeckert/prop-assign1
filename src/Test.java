@@ -101,22 +101,26 @@ public class Test {
 		InheritanceClass classThree = new InheritanceClass(classOne);
 		InheritanceClass classFour =  new InheritanceClass(classThree);
 		
+		//add a test function to the root of the hierarchy
 		classOne.functions.put("test", new InheritanceFunction() {
 			public void execute(InheritanceObject self, Object arg) {
 				System.out.println("Class one's inheritance test method invoked.");
 			}
 		});
 		
+		//create one object for each class
 		InheritanceObject objOne = new InheritanceObject(classOne);
 		InheritanceObject objTwo = new InheritanceObject(classTwo);
 		InheritanceObject objThree = new InheritanceObject(classThree);
 		InheritanceObject objFour = new InheritanceObject(classFour);
 		
+		//invoke the test method in each of the objects
 		invoke(objOne, "test", (Object) null);
 		invoke(objTwo, "test", (Object) null);
 		invoke(objThree, "test", (Object) null);
 		invoke(objFour, "test", (Object) null);
 		
+		//override objFour's test methodand invoke it
 		classFour.functions.put("test", new InheritanceFunction() {
 			public void execute(InheritanceObject self, Object arg) {
 				System.out.println("Class four's inheritance test method invoked.");
@@ -125,6 +129,8 @@ public class Test {
 		
 		invoke(objFour, "test", (Object) null);
 		
+		
+		//define two new functions in the root class that sets the msg member and prints its contents
 		classOne.functions.put("setMsg", new InheritanceFunction() {
 			public void execute(InheritanceObject self, Object arg) {
 				self.msg = (String) arg;
@@ -137,11 +143,15 @@ public class Test {
 			}
 		});
 		
+		//set msg to a different message in each object
 		invoke(objOne, "setMsg", "Hello I am object 1");
 		invoke(objTwo, "setMsg", "Hello I am object 2");
 		invoke(objThree, "setMsg", "Hello I am object 3");
 		invoke(objFour, "setMsg", "Hello I am object 4");
 		
+		//print each of the messages
+		//a key difference between this and delegation is that the object gets the method from its class, 
+		//  and then invokes it as its own
 		invoke(objOne, "printMsg", null);
 		invoke(objTwo, "printMsg", null);
 		invoke(objThree, "printMsg", null);
